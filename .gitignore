@@ -1,0 +1,15 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Plugin local settings
+.claude/*.local.md
+
+# Generated PM artifacts (project-specific, not part of plugin)
+product-management/
+
+# Logs
+*.log
+
+# Node
+node_modules/
