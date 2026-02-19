@@ -69,10 +69,10 @@ When the user selects a task (or accepts the suggestion):
 
 1. **Provide context** — Explain what this task involves and why it matters
 2. **Ask targeted questions** — Gather information needed to complete the task (product-specific details, decisions, preferences)
-3. **Generate artifacts** — Create the appropriate document using templates from the saas-pm-playbook skill's `references/artifact-templates.md`
+3. **Generate artifacts** — Create the appropriate document using templates from `${CLAUDE_PLUGIN_ROOT}/skills/saas-pm-playbook/references/artifact-templates.md`
 4. **Save artifacts** — Write to the correct subdirectory under `product-management/`
 5. **Update checklist** — Mark the task as complete in `product-management/checklist.md` by changing `- [ ]` to `- [x]`
-6. **Check tool preferences** — If CLAUDE.md indicates a preferred tool (Notion, Linear, etc.) for this type of artifact, offer to also create it there
+6. **Route by tool preference** — Check CLAUDE.md for the user's configured tool for this artifact type. If a tool is configured (Notion, Linear, etc.), create the artifact there as the primary target. Use local markdown only as a fallback when no tool is configured for that duty
 
 ## Step 6: After Task Completion
 

@@ -8,43 +8,45 @@ argument-hint: [product-name]
 
 Initialize a new SaaS product management project for "$ARGUMENTS" (or ask for a product name if none provided).
 
-## Step 1: Detect Installed Tools
+## Step 1: Project Assessment (Brownfield/Greenfield Detection)
 
-Scan the environment for product management-relevant tools:
+Before configuring tools, assess the current project state to determine whether this is a new (greenfield) or existing (brownfield) project.
 
-1. Use `ListMcpResourcesTool` to check for available MCP servers
-2. Check for these PM-relevant tools and note which are available:
-   - **Notion** — for documentation, wikis, databases
-   - **Linear** — for task tracking, sprints, roadmap
-   - **Jira** — for task/issue tracking
-   - **GitHub** — for code repos, issues, project boards
-   - **Slack** — for team communication
-   - **PostHog** — for product analytics, feature flags
-   - **Tinybird** — for analytics queries, dashboards
-   - **Figma** — for design files
-   - **Confluence** — for documentation
+### Scan for Existing Signals
 
-3. Present findings to the user:
-   ```
-   Detected tools:
-   - [Tool name] (available via MCP)
-   ...
+Check for the presence of:
+- `README.md`, `package.json`, common framework files (existing codebase)
+- `docs/`, `product-management/`, `specs/`, `requirements/` (existing documentation)
+- `CLAUDE.md` with PM configuration (previous PM initialization)
+- Notion pages, Linear projects, or other external PM artifacts referenced in project files
 
-   Not detected:
-   - [Tool name]
-   ...
-   ```
+### Brownfield Path (existing signals detected)
 
-## Step 2: Ask User Preferences
+If any signals are found, interview the user:
 
-Use AskUserQuestion to ask the user which tools they want to use for each PM duty:
+1. "I see this is an existing project with [detected signals]. Do you have existing product management documents or artifacts?"
+2. "Where do your current docs live?" (Notion, Confluence, Google Docs, local markdown, etc.)
+3. "Do you already track tasks somewhere?" (Linear, Jira, GitHub Issues, etc.)
+4. "How should we handle existing artifacts?"
+   - **Preserve**: Keep existing docs as-is and layer the PM checklist alongside them
+   - **Migrate**: Import/reference existing artifacts into the new PM structure
+   - **Start fresh**: Create everything from scratch (existing docs remain but aren't linked)
 
-- **Documentation & knowledge base** — Options: [detected tools that fit], Local markdown (default)
-- **Task tracking & roadmap** — Options: [detected tools that fit], Local checklist (default)
-- **Analytics & metrics** — Options: [detected tools that fit], Define later
-- **Design artifacts** — Options: [detected tools that fit], Local references
+Pass the user's answers to Step 2 so tool detection can pre-select detected tools as recommendations.
 
-Default to "Local markdown" for any category where the user doesn't have a preference or tool.
+### Greenfield Path (no signals detected)
+
+If no existing project signals are found:
+- Note that this is a fresh start with no existing artifacts to reconcile
+- In Step 2, recommend configured tools (Notion, Linear) over plain markdown — frame local markdown as the no-setup fallback option
+
+## Step 2: Detect Tools and Configure Preferences
+
+Use the **tool-detection** skill to detect installed companion tools (Notion, Linear, Jira, GitHub, Slack, PostHog, Tinybird, Figma, Confluence) and ask the user which tools they want to use for each PM duty (documentation, task tracking, analytics, design). The skill will persist preferences to CLAUDE.md.
+
+Pass the project assessment context from Step 1:
+- For brownfield projects: pre-select any tools the user said they already use
+- For greenfield projects: recommend detected tools as the primary option, with local markdown as the fallback
 
 ## Step 3: Create Project Structure
 
@@ -70,7 +72,7 @@ product-management/
 
 ## Step 4: Generate Checklist
 
-Create `product-management/checklist.md` with the full 166-task checklist. Load the task list from the saas-pm-playbook skill's `references/playbook-tasks.md` reference file. Format as a markdown checklist:
+Create `product-management/checklist.md` with the full 166-task checklist. Load the task list from `${CLAUDE_PLUGIN_ROOT}/skills/saas-pm-playbook/references/playbook-tasks.md`. Format as a markdown checklist:
 
 ```markdown
 # [Product Name] — Design Phase Checklist

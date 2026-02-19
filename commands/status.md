@@ -1,18 +1,20 @@
 ---
 description: Show product management progress dashboard
-allowed-tools: Read, Grep, Glob
+allowed-tools: Read, Grep, Glob, ListMcpResourcesTool
 ---
 
 # Product Management Status Dashboard
 
 Display the current progress across all 13 design phase workstreams.
 
-## Step 1: Load Checklist
+## Step 1: Load Checklist and Tool Preferences
 
 Read `product-management/checklist.md` to get the current state of all tasks.
 
 If the checklist file does not exist, inform the user:
 > No product management project found. Run `/pm:init [product-name]` to get started.
+
+Also read CLAUDE.md for tool preferences. If a task tracking tool is configured (Linear, Jira, etc.), query it for authoritative status alongside the local checklist. If the external tracker and local checklist differ, show both sources and note the discrepancy.
 
 ## Step 2: Calculate Progress
 
@@ -69,3 +71,16 @@ Generated Artifacts:
 - problem-definition/problem-statement.md
 ...
 ```
+
+## Step 6: Show Tool Configuration
+
+If CLAUDE.md has tool preferences configured, display them:
+
+```
+Configured Tools:
+- Documentation: Notion (primary) | Local markdown (fallback)
+- Task Tracking: Linear (primary) | Local checklist (fallback)
+- Analytics: PostHog
+```
+
+If an external tracker is configured, note that it is the authoritative source for task status and suggest checking there for the most up-to-date state.

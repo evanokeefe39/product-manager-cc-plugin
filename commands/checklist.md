@@ -1,6 +1,6 @@
 ---
 description: View and manage the 166-task design phase checklist
-allowed-tools: Read, Write, Edit, Grep, Glob, AskUserQuestion
+allowed-tools: Read, Write, Edit, Grep, Glob, AskUserQuestion, ListMcpResourcesTool
 argument-hint: "[action] (e.g., show, complete 5, reset 12, phase A)"
 ---
 
@@ -19,12 +19,17 @@ Interpret "$ARGUMENTS" as one of these actions:
 - **`next`** → Show the next recommended tasks to work on
 - **`search [keyword]`** → Search tasks by keyword
 
-## Load Checklist
+## Load Checklist and Tool Preferences
 
 Read `product-management/checklist.md`.
 
 If it doesn't exist, tell the user:
 > No checklist found. Run `/pm:init [product-name]` to create one.
+
+Also read CLAUDE.md for task tracking tool preferences. If an external tracker is configured (Linear, Jira, GitHub Issues, etc.):
+- When marking tasks complete, also update the corresponding issue in the external tracker
+- When showing status, note that external tracking is configured and suggest checking there for the authoritative state
+- Use `ListMcpResourcesTool` to verify the external tracker is accessible
 
 ## Action: Show (default)
 
@@ -88,3 +93,4 @@ After marking tasks complete or resetting them:
 1. Recalculate the progress summary at the top of checklist.md
 2. Show the updated count for the affected phase
 3. Show overall progress (X/166 complete)
+4. If an external task tracker is configured in CLAUDE.md, sync the status change there and confirm the update

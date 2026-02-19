@@ -5,6 +5,8 @@
   "author": {
     "name": "evano"
   },
+  "homepage": "https://github.com/evano/product-manager-cc-plugin",
+  "license": "MIT",
   "keywords": [
     "product-management",
     "saas",

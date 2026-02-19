@@ -1,5 +1,5 @@
 ---
-name: SaaS PM Playbook
+name: Product Management
 description: >-
   This skill should be used when the user asks to "plan a SaaS product",
   "start product discovery", "create a PRD", "do market research",
@@ -11,6 +11,9 @@ description: >-
   product management design phase tasks. Guides the user through a complete
   SaaS product management design phase methodology covering 13 workstreams
   and 166 tasks from initial concept to validated, buildable specification.
+  Do NOT use for general software architecture, business strategy consulting,
+  analytics implementation, or engineering work outside SaaS product design
+  phase context. Not for code reviews, debugging, or DevOps tasks.
 version: 0.1.0
 ---
 
@@ -19,6 +22,32 @@ version: 0.1.0
 ## Purpose
 
 Guide solo founders and small teams through the complete SaaS product design phase — from initial concept to a validated, buildable specification. The design phase is not purely visual design; it encompasses strategic design, experience design, and technical design across 13 interconnected workstreams.
+
+## Triggers
+
+This skill activates when:
+- User starts a new product management project (`/pm:init`)
+- User asks to work on a specific phase (`/pm:phase [A-M]`)
+- User requests any PM artifact (PRD, persona, strategy doc, etc.)
+- User asks about product management methodology, prioritization, or planning
+- User mentions SaaS product design tasks (market research, customer discovery, etc.)
+
+## Inputs
+
+- **Product name** — from CLAUDE.md or user prompt
+- **Current phase** — from `product-management/checklist.md` progress
+- **Tool preferences** — from CLAUDE.md PM configuration section
+- **Existing artifacts** — from `product-management/` subdirectories
+- **User request** — specific phase, task, or artifact to work on
+
+## Smart Adaptive Approach
+
+When working on a phase:
+
+1. **Show overview** — Present all tasks in the phase with completion status
+2. **Suggest priorities** — Based on what's already done, recommend the highest-impact next tasks
+3. **Guide execution** — Walk through selected tasks, generating artifacts along the way
+4. **Track progress** — Update the project checklist after each task
 
 ## Core Principles
 
@@ -69,54 +98,33 @@ Process phases roughly in order (A through M), expecting iteration. Key dependen
 - **I can run parallel to F-G** — Technical and UX design can happen concurrently
 - **J-K-L-M can overlap** — These supporting workstreams progress alongside core design
 
-### Smart Adaptive Approach
-
-When working on a phase:
-
-1. **Show overview** — Present all tasks in the phase with completion status
-2. **Suggest priorities** — Based on what's already done, recommend the highest-impact next tasks
-3. **Guide execution** — Walk through selected tasks, generating artifacts along the way
-4. **Track progress** — Update the project checklist after each task
-
 ### Artifact Generation
 
-Generate artifacts as markdown files by default in the project's `product-management/` directory, organized by type (see Artifact Subdirectory Mapping below). The master checklist lives at `product-management/checklist.md`.
+Check CLAUDE.md for tool preferences before generating any artifact. Route artifacts to the user's configured tool as the primary target. Use local markdown only as a fallback when no tool is configured for that duty.
 
-If companion tools are configured (Notion, Linear, etc.), artifacts should also be offered in those systems. Consult CLAUDE.md for user preferences on which system to use for different PM duties.
+The master checklist lives at `product-management/checklist.md` (always maintained as the local source of truth for progress tracking).
 
-## Critical Concepts
+### Tool Preference Routing
 
-Reference these SaaS-specific concepts when relevant:
+| PM Duty | If Tool Configured | If No Tool Configured |
+|---------|-------------------|----------------------|
+| Documentation & artifacts | Create in configured tool (Notion, Confluence, etc.) as primary target | Write to `product-management/` as markdown |
+| Task tracking | Create/update in configured tool (Linear, Jira, etc.) | Update `product-management/checklist.md` |
+| Analytics | Reference configured tool (PostHog, Tinybird, etc.) for real data | Define metrics in local markdown |
 
-- **Product-Market Fit (PMF)** — Measured through retention, NPS, Sean Ellis test
-- **North Star Metric** — The single metric capturing core value delivered
-- **Activation** — The moment a new user first experiences core value
-- **Time to Value (TTV)** — Sign-up to first meaningful outcome; shorter is better
-- **Net Revenue Retention (NRR)** — Revenue retained from existing customers including expansion/churn
-- **Cohort Analysis** — Tracking behavior of user groups over time
-- **Feature Adoption Curve** — How new features move from early adopters to mainstream
-- **Switching Costs and Moats** — Defensibility through data, workflows, habits
+When a tool is configured:
+- The configured tool is the **primary** destination for that duty
+- A local markdown copy may optionally be saved for version control
+- Always report where the artifact was saved
 
-## Prioritization Frameworks
+## Constraints and Guardrails
 
-When helping prioritize features or tasks, apply the appropriate framework:
-
-- **RICE** — Reach, Impact, Confidence, Effort. Best for comparing feature candidates.
-- **ICE** — Impact, Confidence, Ease. Lighter-weight alternative to RICE.
-- **MoSCoW** — Must/Should/Could/Won't. Best for scope definition.
-- **Kano Model** — Basic/Performance/Excitement. Best for understanding satisfaction drivers.
-- **Opportunity Scoring** — Importance vs. Satisfaction. Best for identifying unmet needs.
-
-## Standard Operating Procedures
-
-Reference these cadences when planning ongoing PM work:
-
-- **Weekly product review** — Progress against OKRs, blockers, decisions needed
-- **Bi-weekly discovery sync** — Research findings, customer insights
-- **Monthly roadmap review** — Reassess priorities against strategy
-- **Quarterly planning (OKR cycle)** — Set objectives, align teams
-- **Post-launch review** — 2-4 weeks after launch, review adoption metrics
-- **Continuous backlog grooming** — Refine and reprioritize weekly
+- **Scope**: This playbook covers the design phase only — not development, deployment, or ongoing operations
+- **Team size**: Optimized for solo founders and teams of 1-3; larger teams may need additional coordination processes
+- **File safety**: Never overwrite existing artifacts without confirmation; append or create new versions
+- **Batch size**: Work on 1-3 tasks per session to maintain quality; avoid generating all 166 tasks at once
+- **Prerequisite**: A PM project must be initialized (`/pm:init`) before using phase-specific commands
+- **Tool boundaries**: Only use companion tools (Notion, Linear, etc.) that the user has explicitly configured in CLAUDE.md
 
 ## Additional Resources
 
@@ -124,8 +132,9 @@ Reference these cadences when planning ongoing PM work:
 
 For the complete task lists and detailed guidance, consult:
 
-- **`references/playbook-tasks.md`** — Full 166-task checklist organized by workstream (A-M) with detailed descriptions
-- **`references/artifact-templates.md`** — Templates and structure guides for each artifact type (PRD, persona, competitive analysis, etc.)
+- **`${CLAUDE_PLUGIN_ROOT}/skills/saas-pm-playbook/references/playbook-tasks.md`** — Full 166-task checklist organized by workstream (A-M) with detailed descriptions
+- **`${CLAUDE_PLUGIN_ROOT}/skills/saas-pm-playbook/references/artifact-templates.md`** — Templates and structure guides for each artifact type (PRD, persona, competitive analysis, etc.)
+- **`${CLAUDE_PLUGIN_ROOT}/skills/saas-pm-playbook/references/pm-concepts.md`** — SaaS-specific concepts (PMF, NRR, activation, etc.), prioritization frameworks (RICE, ICE, MoSCoW, Kano), and standard operating procedures
 
 ### Artifact Subdirectory Mapping
 

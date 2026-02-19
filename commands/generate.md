@@ -72,7 +72,7 @@ For a PRD:
 
 ## Step 4: Generate Artifact
 
-Load the template structure from the saas-pm-playbook skill's `references/artifact-templates.md` and generate a complete, practical artifact.
+Load the template structure from `${CLAUDE_PLUGIN_ROOT}/skills/saas-pm-playbook/references/artifact-templates.md` and generate a complete, practical artifact.
 
 Guidelines:
 - Fill in all sections with real, actionable content (not placeholder text)
@@ -83,10 +83,11 @@ Guidelines:
 
 ## Step 5: Save and Update
 
-1. Write the artifact to the appropriate directory under `product-management/`
-2. Use a descriptive filename (e.g., `persona-startup-founder.md`, `prd-user-onboarding.md`)
-3. Update `product-management/checklist.md` — mark relevant tasks as complete
-4. Check CLAUDE.md for tool preferences — if the user prefers Notion/Linear/etc. for this type, offer to create it there too
+1. Read CLAUDE.md for tool preferences
+2. **If a documentation tool is configured** (e.g., Notion): create the artifact there as the primary target. Optionally also save a local markdown copy for version control
+3. **If no tool is configured**: write the artifact to the appropriate directory under `product-management/` with a descriptive filename (e.g., `persona-startup-founder.md`, `prd-user-onboarding.md`)
+4. Update `product-management/checklist.md` — mark relevant tasks as complete
+5. Report where the artifact was saved (tool name and/or file path)
 
 ## Step 6: Summary
 
