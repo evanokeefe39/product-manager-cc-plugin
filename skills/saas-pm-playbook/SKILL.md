@@ -86,17 +86,27 @@ The design phase spans these interconnected workstreams. Each contains specific 
 
 ## Recommended Workflow
 
-### Phase Sequencing
+### Iterative, Non-Linear Workflow
 
-Process phases roughly in order (A through M), expecting iteration. Key dependencies:
+Users rarely work through phases A–M sequentially. Expect them to work across multiple workstreams simultaneously, jump between phases, and bring existing research or notes that cover tasks in various phases. Key dependency guidance (soft, not enforced):
 
-- **A & B first** — Market research and customer discovery inform everything else
+- **A & B are foundational** — Market research and customer discovery inform most other phases, but partial progress is fine
 - **C before D** — Frame the problem before defining strategy
 - **D before E** — Strategy drives requirements
 - **E before F-G** — Requirements inform design
 - **F-G before H** — Design before prototyping
 - **I can run parallel to F-G** — Technical and UX design can happen concurrently
-- **J-K-L-M can overlap** — These supporting workstreams progress alongside core design
+- **J-K-L-M can overlap with everything** — These supporting workstreams progress alongside any core work
+
+### Accepting Existing Work
+
+When a user shares existing notes, research, or artifacts (pasted text, uploaded docs, verbal summaries):
+
+1. **Map to tasks** — Identify which specific checklist tasks (by number) the notes cover, even partially
+2. **Confirm coverage** — Tell the user which tasks you believe their notes satisfy and ask for confirmation
+3. **Generate artifacts** — Offer to formalize their notes into proper artifacts using the templates
+4. **Update checklist** — Mark confirmed tasks as complete
+5. **Identify gaps** — Point out any closely related tasks their notes don't fully cover
 
 ### Artifact Generation
 

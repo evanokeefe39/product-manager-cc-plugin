@@ -47,6 +47,8 @@ Mark the specified task number(s) as complete:
 
 Support multiple tasks: `complete 5 6 7` or `complete 5-7`
 
+Support phase-level completion: `complete A` marks all tasks in Phase A as complete. Confirm with the user before bulk-completing an entire phase.
+
 ## Action: Reset / Undo
 
 Mark the specified task number(s) as incomplete:
@@ -74,14 +76,16 @@ Show all tasks for the specified phase with their completion status:
 
 ## Action: Next
 
-Analyze the checklist and recommend the next 3-5 tasks to work on:
+Analyze the checklist and recommend the next 3-5 tasks to work on **across all phases**, not just the first incomplete one. Users work iteratively across multiple workstreams simultaneously.
 
-1. Find the first incomplete phase (or partially complete)
-2. Within that phase, identify tasks that:
-   - Don't depend on other incomplete tasks
-   - Produce artifacts needed by downstream tasks
-   - Are quick wins that build momentum
-3. Present recommendations with brief rationale
+1. Scan **all phases** for incomplete tasks
+2. Rank candidates by:
+   - **Cross-phase dependencies** — tasks that unblock work in other phases (e.g., defining ICP in B unblocks positioning in D and pricing in L)
+   - **Artifact dependencies** — tasks that produce artifacts needed by downstream tasks in any phase
+   - **Cluster momentum** — if a phase is nearly complete, suggest finishing it
+   - **Quick wins** — straightforward tasks that build momentum
+   - **User's recent focus** — if they've been working on phases D and J, suggest related tasks in those areas
+3. Present recommendations grouped by theme rather than phase order, with brief rationale for each
 
 ## Action: Search
 
