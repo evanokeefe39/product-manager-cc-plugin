@@ -43,6 +43,16 @@ Map "$ARGUMENTS" to an artifact type:
 
 If no argument provided or unrecognized, ask the user what they want to generate.
 
+## Step 1.5: Route to the Correct Generator
+
+Based on the artifact type, delegate to the appropriate agent:
+
+**Use pm-strategic-artifact-generator for:** `competitive-analysis`, `competitors`, `tam`, `market-sizing`, `strategy`, `vision`, `positioning`, `business-model`, `prd`, `architecture`, `tech-design`, `metrics`, `analytics-plan`, `launch-plan`, `pricing`
+
+**Use pm-artifact-generator for:** `problem-statement`, `product-brief`, `persona`, `jtbd`, `jobs`, `customer-journey`, `press-release`, `prfaq`, `user-stories`, `mvp`, `voice-tone`, `ia`, `sitemap`
+
+**Use pm-structured-artifact-generator for:** `user-flow`, `state-transitions`, `data-model`, `api-design`, `event-taxonomy`, `requirements-traceability`, `risk-register`, `raci`, `process-docs`, `ui-copy`, `onboarding-copy`, `email-copy`, `help-content`
+
 ## Step 2: Gather Context
 
 1. Read CLAUDE.md for product details and tool preferences
